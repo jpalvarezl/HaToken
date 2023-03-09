@@ -1,19 +1,20 @@
-using System.Net;
-using System.IO;
-using System;
-
 public class FileManager {
 
-    private HttpClient _httpClient { get;init; }
+    private HttpClient httpClient { get; init; }
 
     public FileManager() {
-        _httpClient = new HttpClient();
+        httpClient = new HttpClient();
     }
 
-    public async Task fetchFile(Uri uri) {
-        var response = await _httpClient.GetAsync(uri);
-        using (FileStream fs = File.Create("")) {
+    public async Task LoadBpeFile(string fileName) {
+    }
+
+    private async Task FetchFile(Uri uri, string fileName) {
+        var response = await httpClient.GetAsync(uri);
+        using (FileStream fs = File.Create(fileName)) {
             await response.Content.CopyToAsync(fs);
         }
     }
 }
+
+
