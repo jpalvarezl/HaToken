@@ -8,7 +8,10 @@ internal class Program {
         var languageModel = new R50KBase();
         var fileManager = new FileManager();
 
-        await fileManager.LoadBpeFile(languageModel);
-        Console.WriteLine("Got the file!");
+        var tokens = await fileManager.loadTokens(languageModel);
+
+        foreach(var item in tokens) {
+            Console.WriteLine($"{item.Key} {item.Value}");
+        }
     }
 }

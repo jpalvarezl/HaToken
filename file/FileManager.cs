@@ -10,19 +10,31 @@ public class FileManager {
         httpClient = new HttpClient();
     }
 
-    public async Task LoadBpeFile(ILanguageModel languageModel) {
+    public async Task<Dictionary<string, int>> loadTokens(ILanguageModel languageModel) {
+        var fileName = $"{languageModel.Name}.bpe";
+        var filePath = BuildFileName(fileName);
+
+        var output = new Dictionary<string, int>();
+        foreach(string line in File.ReadLines(filePath)) {
+            var result = line.Split(" ");
+            output.Add(result[0], int.Parse(result[1]));
+        }
+        return output;
+    }
+    public async Task<FileStream> LoadBpeFile(ILanguageModel languageModel) {
         var fileName = $"{languageModel.Name}.bpe";
         var filePath = BuildFileName(fileName);
         var fileExists = File.Exists(filePath);
-        if (!fileExists) {
-            await FetchFile(languageModel.BpeFileLocation, fileName);
-        }
+        return !fileExists ?
+            await FetchFile(languageModel.BpeFileLocation, fileName) :
+            File.Open(filePath, FileMode.Open);
     }
 
-    private async Task FetchFile(Uri uri, string fileName) {
+    private async Task<FileStream> FetchFile(Uri uri, string fileName) {
         var response = await httpClient.GetAsync(uri);
-        using (FileStream fs = GetFileHandle(fileName)) {
-            await response.Content.CopyToAsync(fs);
+        using (FileStream fileStream = GetFileHandle(fileName)) {
+            await response.Content.CopyToAsync(fileStream);
+            return fileStream;
         }
     }
 
