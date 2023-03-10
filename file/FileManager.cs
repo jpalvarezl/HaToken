@@ -35,6 +35,7 @@ public class FileManager : IDisposable {
         var response = await httpClient.GetAsync(uri);
         FileStream fileStream = GetFileHandle(fileName);
         await response.Content.CopyToAsync(fileStream);
+        fileStream.Seek(0, SeekOrigin.Begin);
         return fileStream;
     }
 
