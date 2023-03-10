@@ -12,9 +12,9 @@ public class FileManager : IDisposable {
 
     public async Task<Dictionary<string, int>> loadTokens(Uri uri, string languageModelName) {
         var fileStream = await LoadBpeFile(uri, languageModelName);
-        var output = new Dictionary<string, int>();
 
         using StreamReader streamReader = new StreamReader(fileStream);
+        var output = new Dictionary<string, int>();
         string line;
         while ((line = streamReader.ReadLine()) != null) {
             var result = line.Split(" ");
@@ -26,17 +26,16 @@ public class FileManager : IDisposable {
     public async Task<FileStream> LoadBpeFile(Uri uri, string fileName) {
         var filePath = BuildFileName(fileName);
         var fileExists = File.Exists(filePath);
-        return !fileExists ?
-            await FetchFile(uri, fileName) :
-            File.Open(filePath, FileMode.Open);
+        return fileExists ?
+            File.Open(filePath, FileMode.Open):
+            await FetchFile(uri, fileName);
     }
 
     private async Task<FileStream> FetchFile(Uri uri, string fileName) {
         var response = await httpClient.GetAsync(uri);
-        using (FileStream fileStream = GetFileHandle(fileName)) {
-            await response.Content.CopyToAsync(fileStream);
-            return fileStream;
-        }
+        FileStream fileStream = GetFileHandle(fileName);
+        await response.Content.CopyToAsync(fileStream);
+        return fileStream;
     }
 
     private FileStream GetFileHandle(string fileName) {
@@ -44,8 +43,7 @@ public class FileManager : IDisposable {
         return File.Create(BuildFileName(fileName));
     }
 
-    private string BuildFileName(string fileName) =>
-        $"{REPORT_ROOT_FOLDER}/{fileName}";
+    private string BuildFileName(string fileName) => $"{REPORT_ROOT_FOLDER}/{fileName}";
 
     public void Dispose() => this.httpClient.Dispose();
 
