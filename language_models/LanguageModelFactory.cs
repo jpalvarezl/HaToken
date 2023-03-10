@@ -80,6 +80,7 @@ public class LanguageModelFactory: IDisposable {
             new Uri("https://openaipublic.blob.core.windows.net/encodings/r50k_base.tiktoken"),
             $"{modelName}"
         ),
+        // TODO: missing GPT2
         _ => throw new ArgumentException("Unsupported model")
     };
 
