@@ -2,7 +2,7 @@ using LanguageModel;
 
 namespace Services;
 
-public class FileManager {
+public class FileManager : IDisposable {
 
     private HttpClient httpClient { get; init; }
 
@@ -10,26 +10,24 @@ public class FileManager {
         httpClient = new HttpClient();
     }
 
-    public async Task<Dictionary<string, int>> loadTokens(ILanguageModel languageModel) {
-        var fileStream = await LoadBpeFile(languageModel);
+    public async Task<Dictionary<string, int>> loadTokens(Uri uri, string languageModelName) {
+        var fileStream = await LoadBpeFile(uri, languageModelName);
         var output = new Dictionary<string, int>();
 
-        using (StreamReader streamReader = new StreamReader(fileStream)) {
-            string line;
-            while ((line = streamReader.ReadLine()) != null) {
-                var result = line.Split(" ");
-                output.Add(result[0], int.Parse(result[1]));
-            }
+        using StreamReader streamReader = new StreamReader(fileStream);
+        string line;
+        while ((line = streamReader.ReadLine()) != null) {
+            var result = line.Split(" ");
+            output.Add(result[0], int.Parse(result[1]));
         }
-        languageModel.MergeableRanks = output;
+
         return output;
     }
-    public async Task<FileStream> LoadBpeFile(ILanguageModel languageModel) {
-        var fileName = $"{languageModel.Name}.bpe";
+    public async Task<FileStream> LoadBpeFile(Uri uri, string fileName) {
         var filePath = BuildFileName(fileName);
         var fileExists = File.Exists(filePath);
         return !fileExists ?
-            await FetchFile(languageModel.BpeFileLocation, fileName) :
+            await FetchFile(uri, fileName) :
             File.Open(filePath, FileMode.Open);
     }
 
@@ -48,6 +46,8 @@ public class FileManager {
 
     private string BuildFileName(string fileName) =>
         $"{REPORT_ROOT_FOLDER}/{fileName}";
+
+    public void Dispose() => this.httpClient.Dispose();
 
     private static string REPORT_ROOT_FOLDER = ".bpe_files";
 }

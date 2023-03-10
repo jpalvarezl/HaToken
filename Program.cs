@@ -4,13 +4,11 @@ using Services;
 internal class Program {
 
     public static async Task Main(string[] args) {
+        using var fileManager = new FileManager();
+        using var languageModelFactory = new LanguageModelFactory(fileManager);
 
-        var languageModel = new R50KBase();
-        var fileManager = new FileManager();
-
-        var tokens = await fileManager.loadTokens(languageModel);
-
-        foreach(var item in tokens) {
+        var model = await languageModelFactory.Create(ModelName.r50k_base);
+        foreach(var item in model.MergeableRanks) {
             Console.WriteLine($"{item.Key} {item.Value}");
         }
     }

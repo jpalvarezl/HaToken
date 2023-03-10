@@ -1,6 +1,6 @@
 namespace LanguageModel;
 
-public enum ModelNames {
+public enum ModelName {
     gpt2,
     r50k_base,
     p50k_base,
@@ -28,17 +28,15 @@ internal static class Extensions {
     };
 }
 
-public interface ILanguageModel {
+public struct LanguageModel {
 
-    ModelNames Name { get; }
+    public ModelName Name { get; init; }
 
-    int? ExplicitNVocab { get; }
+    public int? ExplicitNVocab { get; init; }
 
-    string RegexPattern { get; }
+    public string RegexPattern { get; init; }
 
-    Dictionary<string, int> MergeableRanks { get; set;}
+    public Dictionary<string, int> MergeableRanks { get; init; }
 
-    Dictionary<string, int> SpecialTokens { get; }
-
-    Uri BpeFileLocation { get; }
+    public Dictionary<string, int> SpecialTokens { get; init; }
 }

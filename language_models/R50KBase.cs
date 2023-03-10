@@ -2,23 +2,27 @@ namespace LanguageModel;
 
 using Services;
 
-public sealed class R50KBase : ILanguageModel
+public sealed class R50KBase
 {
-    ModelNames ILanguageModel.Name => ModelNames.r50k_base;
 
-    int? ILanguageModel.ExplicitNVocab => null;
+    public int? ExplicitNVocab => null;
 
-    string ILanguageModel.RegexPattern => "";
+    public string RegexPattern => "";
 
-    // Dictionary<string, int> ILanguageModel.MergeableRanks
-
-    Dictionary<string, int> ILanguageModel.SpecialTokens =>
+    public Dictionary<string, int> SpecialTokens =>
     new Dictionary<string, int> {
         { SpecialToken.EndOfText.GetText(), 50256 }
     };
 
-    Uri ILanguageModel.BpeFileLocation =>
+    public Uri BpeFileLocation =>
     new Uri("https://openaipublic.blob.core.windows.net/encodings/p50k_base.tiktoken");
 
-    Dictionary<string, int> ILanguageModel.MergeableRanks {get; set;}
+    public Dictionary<string, int> MergeableRanks {get; private set;}
+
+    // public static async Task<R50KBase> Create(FileManager fileManager) {
+    //     var caca = await fileManager.loadTokens(languageModel);
+    //     var languageModel = new R50KBase(caca);
+    //     languageModel.MergeableRanks = ;
+    //     return languageModel;
+    // }
 }
