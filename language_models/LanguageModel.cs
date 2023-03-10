@@ -36,7 +36,7 @@ public interface ILanguageModel {
 
     string RegexPattern { get; }
 
-    Dictionary<string, int> MergeableRanks { get; }
+    Dictionary<string, int> MergeableRanks { get; set;}
 
     Dictionary<string, int> SpecialTokens { get; }
 

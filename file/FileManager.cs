@@ -11,14 +11,17 @@ public class FileManager {
     }
 
     public async Task<Dictionary<string, int>> loadTokens(ILanguageModel languageModel) {
-        var fileName = $"{languageModel.Name}.bpe";
-        var filePath = BuildFileName(fileName);
-
+        var fileStream = await LoadBpeFile(languageModel);
         var output = new Dictionary<string, int>();
-        foreach(string line in File.ReadLines(filePath)) {
-            var result = line.Split(" ");
-            output.Add(result[0], int.Parse(result[1]));
+
+        using (StreamReader streamReader = new StreamReader(fileStream)) {
+            string line;
+            while ((line = streamReader.ReadLine()) != null) {
+                var result = line.Split(" ");
+                output.Add(result[0], int.Parse(result[1]));
+            }
         }
+        languageModel.MergeableRanks = output;
         return output;
     }
     public async Task<FileStream> LoadBpeFile(ILanguageModel languageModel) {

@@ -1,5 +1,7 @@
 namespace LanguageModel;
 
+using Services;
+
 public sealed class R50KBase : ILanguageModel
 {
     ModelNames ILanguageModel.Name => ModelNames.r50k_base;
@@ -8,9 +10,7 @@ public sealed class R50KBase : ILanguageModel
 
     string ILanguageModel.RegexPattern => "";
 
-    Dictionary<string, int> ILanguageModel.MergeableRanks =>
-    new Dictionary<string, int> {
-    };
+    // Dictionary<string, int> ILanguageModel.MergeableRanks
 
     Dictionary<string, int> ILanguageModel.SpecialTokens =>
     new Dictionary<string, int> {
@@ -19,4 +19,6 @@ public sealed class R50KBase : ILanguageModel
 
     Uri ILanguageModel.BpeFileLocation =>
     new Uri("https://openaipublic.blob.core.windows.net/encodings/p50k_base.tiktoken");
+
+    Dictionary<string, int> ILanguageModel.MergeableRanks {get; set;}
 }
