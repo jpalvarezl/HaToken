@@ -1,5 +1,6 @@
 ﻿using LanguageModel;
 using Services;
+using Encoding;
 
 internal class Program {
 
@@ -7,9 +8,6 @@ internal class Program {
         using var fileManager = new FileManager();
         using var languageModelFactory = new LanguageModelFactory(fileManager);
 
-        var model = await languageModelFactory.Create(ModelName.r50k_base);
-        foreach(var item in model.MergeableRanks) {
-            Console.WriteLine($"{item.Key} {item.Value}");
-        }
+        var model = await languageModelFactory.Create(Utils.EncodingFor("gpt-3.5-turbo"));
     }
 }
