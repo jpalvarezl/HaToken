@@ -1,13 +1,16 @@
 ﻿using LanguageModel;
 using Services;
-using Encoding;
+using Encoders;
 
 internal class Program {
 
     public static async Task Main(string[] args) {
         using var fileManager = new FileManager();
-        using var languageModelFactory = new LanguageModelFactory(fileManager);
+        using var encoderFactory = new EncoderFactory(fileManager);
 
-        var model = await languageModelFactory.Create(Utils.EncodingFor("gpt-3.5-turbo"));
+        Encoder model = await encoderFactory.Create(Utils.EncodingFor("gpt-3.5-turbo"));
+        foreach(var token in model.MergeableRanks) {
+            Console.WriteLine($"{token.Key} {token.Value}");
+        }
     }
 }

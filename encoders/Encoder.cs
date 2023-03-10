@@ -1,6 +1,6 @@
-namespace LanguageModel;
+namespace Encoders;
 
-public enum ModelName {
+public enum EncoderName {
     gpt2,
     r50k_base,
     p50k_base,
@@ -28,9 +28,9 @@ internal static class Extensions {
     };
 }
 
-public struct LanguageModel {
+public struct Encoder {
 
-    public ModelName Name { get; init; }
+    public EncoderName Name { get; init; }
 
     public int? ExplicitNVocab { get; init; }
 
