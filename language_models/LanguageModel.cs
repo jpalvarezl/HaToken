@@ -39,4 +39,6 @@ public interface ILanguageModel {
     Dictionary<string, int> MergeableRanks { get; }
 
     Dictionary<string, int> SpecialTokens { get; }
+
+    Uri BpeFileLocation { get; }
 }

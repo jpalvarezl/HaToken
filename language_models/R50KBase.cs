@@ -16,4 +16,7 @@ public sealed class R50KBase : ILanguageModel
     new Dictionary<string, int> {
         { SpecialToken.EndOfText.GetText(), 50256 }
     };
+
+    Uri ILanguageModel.BpeFileLocation =>
+    new Uri("https://openaipublic.blob.core.windows.net/encodings/p50k_base.tiktoken");
 }
