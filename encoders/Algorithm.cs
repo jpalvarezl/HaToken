@@ -16,28 +16,20 @@ internal static partial class Extensions {
         }
 
         return output;
-    // fn _encode_ordinary_native(&self, text: &str) -> Vec<usize> {
-    //     // This is the core of the encoding logic; the other functions in here
-    //     // just make things complicated :-)
-    //     let regex = self._get_tl_regex();
-    //     let mut ret = vec![];
-    //     for mat in regex.find_iter(text) {
-    //         let piece = mat.unwrap().as_str().as_bytes();
-    //         if let Some(token) = self.encoder.get(piece) {
-    //             ret.push(*token);
-    //             continue;
-    //         }
-    //         ret.extend(&byte_pair_encode(piece, &self.encoder));
-    //     }
-    //     ret
+    }et
     // }
 
+    private static List<int> BytePairEncode(string piece, Dictionary<string, int> ranks) {
+        if (piece.Length == 1) {
+            return new List<int> {ranks[piece] };
+        }
+        return BytePairMerge(piece, ranks, (range) => ranks[piece.Substring(range.Start.Value, range.End.Value)]);
+    }
 
-    // pub fn byte_pair_encode(piece: &[u8], ranks: &HashMap<Vec<u8>, usize>) -> Vec<usize> {
-    //     if piece.len() == 1 {
-    //         return vec![ranks[piece]];
-    //     }
-    //     _byte_pair_merge(piece, ranks, |p| ranks[&piece[p.start..p.end]])
-    // }
+    private static List<int> BytePairMerge(
+        string piece,
+        Dictionary<string, int> ranks,
+        Func<Range, int> f) {
+        // TODO
     }
 }
