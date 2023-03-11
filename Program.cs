@@ -9,8 +9,5 @@ internal class Program {
         using var encoderFactory = new EncoderFactory(fileManager);
 
         Encoder model = await encoderFactory.Create(Utils.EncodingFor("gpt-3.5-turbo"));
-        foreach(var token in model.MergeableRanks) {
-            Console.WriteLine($"{token.Key} {token.Value}");
-        }
     }
 }

@@ -16,7 +16,7 @@ public enum SpecialToken {
     EndOfPrompt
 }
 
-internal static class Extensions {
+internal static partial class Extensions {
 
     public static string GetText(this SpecialToken tokenKey) => tokenKey switch {
         SpecialToken.EndOfText => "<|endoftext|>",
