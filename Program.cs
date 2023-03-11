@@ -9,5 +9,11 @@ internal class Program {
         using var encoderFactory = new EncoderFactory(fileManager);
 
         Encoder model = await encoderFactory.Create(Utils.EncodingFor("gpt-3.5-turbo"));
+
+        var encoded = model.Encode("Hello world");
+
+        foreach (int token in encoded) {
+            Console.WriteLine($"{token}");
+        }
     }
 }

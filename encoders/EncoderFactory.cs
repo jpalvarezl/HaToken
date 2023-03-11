@@ -29,7 +29,7 @@ public class EncoderFactory: IDisposable {
     };
 
     private string GetRegexPatternFor(EncoderName encoderName) => encoderName switch {
-        EncoderName.cl100k_base => "",
+        EncoderName.cl100k_base => @"(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\r\n\p{L}\p{N}]?\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]+[\r\n]*|\s*[\r\n]+|\s+(?!\S)|\s+",
         EncoderName.p50k_edit => "",
         EncoderName.p50k_base => "",
         EncoderName.r50k_base => "",
