@@ -10,15 +10,15 @@ public class FileManager : IDisposable {
         httpClient = new HttpClient();
     }
 
-    public async Task<Dictionary<string, int>> loadTokens(Uri uri, string languageModelName) {
+    public async Task<Dictionary<byte[], int>> loadTokens(Uri uri, string languageModelName) {
         var fileStream = await LoadBpeFile(uri, languageModelName);
 
         using StreamReader streamReader = new StreamReader(fileStream);
-        var output = new Dictionary<string, int>();
+        var output = new Dictionary<byte[], int>();
         string? line;
         while ((line = streamReader.ReadLine()) != null) {
             var result = line.Split(" ");
-            output.Add(result[0], int.Parse(result[1]));
+            output.Add(StringEncoder.BpeKeyDecode(result[0]), int.Parse(result[1]));
         }
 
         return output;

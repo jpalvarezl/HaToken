@@ -36,7 +36,7 @@ public struct Encoder {
 
     public string RegexPattern { get; init; }
 
-    public Dictionary<string, int> MergeableRanks { get; init; }
+    public Dictionary<byte[], int> MergeableRanks { get; init; }
 
     public Dictionary<string, int> SpecialTokens { get; init; }
 }

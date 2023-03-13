@@ -63,7 +63,7 @@ public class EncoderFactory: IDisposable {
         _ => throw new ArgumentException("Unsupported model")
     };
 
-    private async Task<Dictionary<string, int>> GetMergeableTokensFor(EncoderName encoderName) => encoderName switch {
+    private async Task<Dictionary<byte[], int>> GetMergeableTokensFor(EncoderName encoderName) => encoderName switch {
         EncoderName.cl100k_base => await fileManager.loadTokens(
             new Uri("https://openaipublic.blob.core.windows.net/encodings/cl100k_base.tiktoken"),
             $"{encoderName}"
