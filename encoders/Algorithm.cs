@@ -15,7 +15,7 @@ internal static partial class Extensions {
 
             int value;
             if(encoder.MergeableRanks.TryGetValue(matchedKey, out value)) {
-                output.Append(value);
+                output.Prepend(value);
             } else {
                 output.AddRange(BytePairEncode(matchedKey, encoder.MergeableRanks));
             }
@@ -53,14 +53,12 @@ internal static partial class Extensions {
                 break;
             }
 
-            int index = 0;
             var minRank = (int.MaxValue, 0); // rank, index
 
-            foreach(var item in parts) {
-                if (item.Item2 < minRank.Item1){
-                    minRank = (item.Item2, index);
+            for(int i = 0; i < parts.Count; i++) {
+                if(parts[i].Item2 < minRank.Item1) {
+                    minRank = (parts[i].Item2, i);
                 }
-                index++;
             }
 
             if(minRank.Item1 != int.MaxValue) {
@@ -79,7 +77,7 @@ internal static partial class Extensions {
         }
 
         var output = new List<int>();
-        for(int i = 0; i < parts.Count - 1; i++) {
+        for(int i = 0; i < parts.Count; i++) {
             var range = parts[i].Item1..parts[i + 1].Item1;
             output.Add(f.Invoke(range));
         }
