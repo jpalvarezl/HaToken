@@ -14,7 +14,6 @@ internal static partial class Extensions {
             byte[] matchedKey = System.Text.Encoding.UTF8.GetBytes(match.ToString());
 
             int value;
-
             if(encoder.MergeableRanks.TryGetValue(matchedKey, out value)) {
                 output.Append(value);
             } else {
@@ -29,15 +28,13 @@ internal static partial class Extensions {
         if (piece.Length == 1) {
             return new List<int> { ranks[piece] };
         }
-
-        return new List<int>();
-        //return BytePairMerge(piece, ranks, (range) => ranks[piece.Substring(range.Start.Value, range.End.Value)]);
+        return BytePairMerge(piece, ranks, (range) => ranks[piece[range]]);
     }
 
-    // private static List<int> BytePairMerge(
-    //     string piece,
-    //     Dictionary<string, int> ranks,
-    //     Func<Range, int> f) {
-    //     // TODO
-    // }
+    private static List<int> BytePairMerge(
+        byte[] piece,
+        Dictionary<byte[], int> ranks,
+        Func<Range, int> f) {
+        return new List<int>();
+    }
 }
