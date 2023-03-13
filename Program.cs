@@ -10,6 +10,9 @@ internal class Program {
 
         Encoder model = await encoderFactory.Create(Utils.EncodingFor("gpt-3.5-turbo"));
 
+
+        // Result we expect is [9906, 1917]
+        // Using model cl100k_base
         var encoded = model.Encode("Hello world");
 
         foreach (int token in encoded) {

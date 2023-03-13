@@ -35,6 +35,39 @@ internal static partial class Extensions {
         byte[] piece,
         Dictionary<byte[], int> ranks,
         Func<Range, int> f) {
+
+        var parts = new List<(int, int)>(Enumerable.Range(0, piece.Length - 1).Select(index => (index, int.MaxValue)));
+
+        foreach (var index in Enumerable.Range(0, parts.Count -2)) {
+            var rank = GetRank(parts, ranks, piece, index, 0);
+            if(rank != null) {
+                // this fells like it could be a dictionary
+                parts[index] = (index, rank.Value);
+            } else {
+                continue;
+            }
+        }
+
+        // while(true) {
+        //     if(parts.Count == 1) {
+        //         break;
+        //     }
+
+
+        // }
+
         return new List<int>();
+    }
+
+    private static int? GetRank(List<(int, int)> parts, Dictionary<byte[], int> ranks, byte[] piece, int startIndex, int skip) {
+        if (startIndex + skip + 2 < parts.Count) {
+            int rankValue;
+            var rankKey = piece[parts[startIndex].Item1 .. parts[startIndex + skip + 2].Item1];
+
+            if(ranks.TryGetValue(rankKey, out rankValue)) {
+                return rankValue;
+            }
+        }
+        return null;
     }
 }
