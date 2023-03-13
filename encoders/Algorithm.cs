@@ -1,5 +1,5 @@
 using System.Text.RegularExpressions;
-using Services;
+using System.Collections.Generic;
 
 namespace Encoders;
 
@@ -48,15 +48,42 @@ internal static partial class Extensions {
             }
         }
 
-        // while(true) {
-        //     if(parts.Count == 1) {
-        //         break;
-        //     }
+        while(true) {
+            if(parts.Count == 1) {
+                break;
+            }
 
+            int index = 0;
+            var minRank = (int.MaxValue, 0); // rank, index
 
-        // }
+            foreach(var item in parts) {
+                if (item.Item2 < minRank.Item1){
+                    minRank = (item.Item2, index);
+                }
+                index++;
+            }
 
-        return new List<int>();
+            if(minRank.Item1 != int.MaxValue) {
+                int i = minRank.Item2;
+
+                parts[i] = (i, GetRank(parts, ranks, piece, i, 1) ?? int.MaxValue);
+
+                if(i > 0) {
+                    parts[i - 1] = (i - 1, GetRank(parts, ranks, piece, i - 1, 1) ?? int.MaxValue);
+                }
+
+                parts.RemoveAt(i);
+            } else {
+                break;
+            }
+        }
+
+        var output = new List<int>();
+        for(int i = 0; i < parts.Count - 1; i++) {
+            var range = parts[i].Item1..parts[i + 1].Item1;
+            output.Add(f.Invoke(range));
+        }
+        return output;
     }
 
     private static int? GetRank(List<(int, int)> parts, Dictionary<byte[], int> ranks, byte[] piece, int startIndex, int skip) {
