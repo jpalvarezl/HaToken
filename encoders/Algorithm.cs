@@ -16,20 +16,20 @@ internal static partial class Extensions {
         }
 
         return output;
-    }et
+    }
     // }
 
-    private static List<int> BytePairEncode(string piece, Dictionary<string, int> ranks) {
-        if (piece.Length == 1) {
-            return new List<int> {ranks[piece] };
-        }
-        return BytePairMerge(piece, ranks, (range) => ranks[piece.Substring(range.Start.Value, range.End.Value)]);
-    }
+    // private static List<int> BytePairEncode(string piece, Dictionary<string, int> ranks) {
+    //     if (piece.Length == 1) {
+    //         return new List<int> {ranks[piece] };
+    //     }
+    //     return BytePairMerge(piece, ranks, (range) => ranks[piece.Substring(range.Start.Value, range.End.Value)]);
+    // }
 
-    private static List<int> BytePairMerge(
-        string piece,
-        Dictionary<string, int> ranks,
-        Func<Range, int> f) {
-        // TODO
-    }
+    // private static List<int> BytePairMerge(
+    //     string piece,
+    //     Dictionary<string, int> ranks,
+    //     Func<Range, int> f) {
+    //     // TODO
+    // }
 }

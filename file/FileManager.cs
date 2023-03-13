@@ -15,7 +15,7 @@ public class FileManager : IDisposable {
 
         using StreamReader streamReader = new StreamReader(fileStream);
         var output = new Dictionary<string, int>();
-        string line;
+        string? line;
         while ((line = streamReader.ReadLine()) != null) {
             var result = line.Split(" ");
             output.Add(result[0], int.Parse(result[1]));
