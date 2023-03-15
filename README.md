@@ -14,7 +14,7 @@ A C# implementation for OpenAI language models encoding
 
 ### Way forward
 
-- Focus on the regex on grokking `tiktoken`'s regexes for each encoder.
+- Focus on the encoders' regex for `tiktoken`.
 - Write the regex correctly in a C# compliant way.
 - Test with an external script. Meaning, table test different inputs and assert over the output of `tiktoken` vs `HaToken`
 
