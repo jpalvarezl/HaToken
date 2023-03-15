@@ -24,3 +24,18 @@ A C# implementation for OpenAI language models encoding
 
 - In order to do that either press F11 a lot, or open the files in VSCode for `tiktoken` and set your breakpoints there. Their locations should be something like `~/.local/lib/python3.8/site-packages/tiktoken/core.py`
 
+- You will have to install `tiktoken` with `pip` like so:
+
+```bash
+pip3 install tiktoken
+```
+
+- Example `playground.py` file:
+
+```python
+import tiktoken
+enc = tiktoken.get_encoding("cl100k_base")
+result = enc.encode("Hello world")
+
+print(result)
+```
