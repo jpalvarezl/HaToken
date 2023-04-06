@@ -11,13 +11,18 @@ internal static partial class Extensions {
 
         var output = new List<int>();
         foreach (Match match in regex.Matches(text)) {
-            byte[] matchedKey = System.Text.Encoding.UTF8.GetBytes(match.ToString());
+            Console.WriteLine($"Matched text: {match.ToString()}");
+            byte[] matchEncoded = System.Text.Encoding.UTF8.GetBytes(match.ToString());
+
+            foreach(var byteValue in matchEncoded) {
+                Console.WriteLine($"Matched Encoded roundtrip: {byteValue}");
+            }
 
             int value;
-            if(encoder.MergeableRanks.TryGetValue(matchedKey, out value)) {
+            if(encoder.MergeableRanks.TryGetValue(matchEncoded, out value)) {
                 output.Prepend(value);
             } else {
-                output.AddRange(BytePairEncode(matchedKey, encoder.MergeableRanks));
+                output.AddRange(BytePairEncode(matchEncoded, encoder.MergeableRanks));
             }
         }
 
