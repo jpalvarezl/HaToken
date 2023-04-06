@@ -1,5 +1,3 @@
-using LanguageModel;
-
 namespace Services;
 
 public class FileManager : IDisposable {
@@ -29,6 +27,15 @@ public class FileManager : IDisposable {
         return fileExists ?
             File.Open(filePath, FileMode.Open):
             await FetchFile(uri, fileName);
+    }
+
+    public string getFullPathOfFile(string fileName) {
+        return BuildFileName(fileName);
+        // var filePath = BuildFileName(fileName);
+        // var fileExists = File.Exists(filePath);
+        // return fileExists ?
+        //     Path.GetFullPath (filePath):
+        //     null;
     }
 
     private async Task<FileStream> FetchFile(Uri uri, string fileName) {

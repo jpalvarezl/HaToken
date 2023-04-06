@@ -1,22 +1,39 @@
-﻿using LanguageModel;
+﻿// Add using statements
+using Microsoft.ML;
+using Microsoft.ML.Tokenizers;
 using Services;
-using Encoders;
+
 
 internal class Program {
 
     public static async Task Main(string[] args) {
+        // Initialize MLContext
+        // var mlContext = new MLContext();
+
+        var vocabFileName = "vocab";
+        var mergeFileName = "encoder";
+
         using var fileManager = new FileManager();
-        using var encoderFactory = new EncoderFactory(fileManager);
+        var vocabFile = await fileManager.LoadBpeFile(
+            new Uri("https://openaipublic.blob.core.windows.net/gpt-2/encodings/main/vocab.bpe"),
+            vocabFileName
+        );
+        var mergeFile = await fileManager.LoadBpeFile(
+            new Uri("https://openaipublic.blob.core.windows.net/gpt-2/encodings/main/encoder.json"),
+            mergeFileName
+        );
 
-        Encoder model = await encoderFactory.Create(Utils.EncodingFor("gpt-3.5-turbo"));
+        fileManager.Dispose();
+        // Initialize Tokenizer
+        var tokenizer = new Tokenizer(new Bpe(vocabFile.Name, mergeFile.Name),RobertaPreTokenizer.Instance);
 
+        // Define input for tokenization
+        var input = "the brown fox jumped over the lazy dog!";
 
-        // Result we expect is [9906, 1917]
-        // Using model cl100k_base
-        var encoded = model.Encode("Hello world");
+        // Encode input
+        var tokenizerEncodedResult = tokenizer.Encode(input);
 
-        foreach (int token in encoded) {
-            Console.WriteLine($"{token}");
-        }
+        // Decode results
+        tokenizer.Decode(tokenizerEncodedResult.Ids);
     }
 }
