@@ -16,11 +16,15 @@ internal class Program {
         var tokenizer = new Tokenizer(new Bpe(bpeFile.VocabFile, bpeFile.MergeFile), RobertaPreTokenizer.Instance);
 
         // Define input for tokenization
-        var input = "the brown fox jumped over the lazy dog!";
+        var input = "Hello world";
 
         // Encode input
         var tokenizerEncodedResult = tokenizer.Encode(input);
 
+
+        foreach(var tokenId in tokenizerEncodedResult.Ids) {
+            Console.WriteLine(tokenId);
+        }
         // Decode results
         tokenizer.Decode(tokenizerEncodedResult.Ids);
     }
@@ -49,7 +53,10 @@ internal class Program {
                 mergeFileName
             );
 
-            return new BpeFiles(vocabFile.Name, mergeFile.Name);
+            // Not sure but it seems that the tiktoken repo named the files in the opposite they should
+            // At least according to what can be found in this repo:
+            // https://huggingface.co/gpt2/tree/main
+            return new BpeFiles(mergeFile.Name, vocabFile.Name);
         }
     }
 }
