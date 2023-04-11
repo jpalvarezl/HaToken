@@ -35,7 +35,7 @@ public class BpeFactory: IDisposable {
         string uriVocabFile,
         string? uriMergeFile = null
         ) {
-        var vocabFileName = "vocab";
+        var vocabFileName = $"{encoderName}_vocab.bpe";
 
         using var vocabFile = await fileManager.LoadBpeFile(
                 new Uri(uriVocabFile),
@@ -43,7 +43,7 @@ public class BpeFactory: IDisposable {
             );
 
         if(uriMergeFile != null) {
-            var mergeFileName = "encoder";
+            var mergeFileName = $"{encoderName}_encoder.json";
 
             using var mergeFile = await fileManager.LoadBpeFile(
                 new Uri(uriMergeFile),

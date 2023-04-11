@@ -46,7 +46,7 @@ public class FileManager : IDisposable {
         return File.Create(BuildFileName(fileName));
     }
 
-    private string BuildFileName(string fileName) => $"{REPORT_ROOT_FOLDER}/{fileName}.bpe";
+    private string BuildFileName(string fileName) => $"{REPORT_ROOT_FOLDER}/{fileName}";
 
     public void Dispose() => this.httpClient.Dispose();
 
