@@ -31,11 +31,6 @@ public class FileManager : IDisposable {
 
     public string getFullPathOfFile(string fileName) {
         return BuildFileName(fileName);
-        // var filePath = BuildFileName(fileName);
-        // var fileExists = File.Exists(filePath);
-        // return fileExists ?
-        //     Path.GetFullPath (filePath):
-        //     null;
     }
 
     private async Task<FileStream> FetchFile(Uri uri, string fileName) {
