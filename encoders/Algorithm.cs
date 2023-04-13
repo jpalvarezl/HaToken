@@ -32,7 +32,7 @@ internal static partial class Extensions {
 
             int value;
             if(encoder.MergeableRanks.TryGetValue(matchEncoded, out value)) {
-                output.Prepend(value);
+                output.Add(value);
             } else {
                 output.AddRange(BytePairEncode(matchEncoded, encoder.MergeableRanks));
             }
