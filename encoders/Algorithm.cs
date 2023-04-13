@@ -1,7 +1,22 @@
 using System.Text.RegularExpressions;
-using System.Collections.Generic;
+using Services;
 
 namespace Encoders;
+
+
+public static class NonAzureEncoder {
+
+        public static async Task<List<int>> Encode(string text, EncoderName encoderName) {
+        using var fileManager = new FileManager();
+        using var encoderFactory = new EncoderFactory(fileManager);
+
+        Encoder model = await encoderFactory.Create(encoderName);
+
+        var encoded = model.Encode(text);
+
+        return encoded;
+    }
+}
 
 internal static partial class Extensions {
 

@@ -1,6 +1,4 @@
-using Encoders;
-
-namespace LanguageModel;
+namespace Encoders;
 
 internal static class Utils {
     public static EncoderName EncodingFor(string modelName) => modelName switch {
