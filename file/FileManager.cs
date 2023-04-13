@@ -12,7 +12,7 @@ public class FileManager : IDisposable {
         var fileStream = await LoadBpeFile(uri, languageModelName);
 
         using StreamReader streamReader = new StreamReader(fileStream);
-        var output = new Dictionary<byte[], int>();
+        var output = new Dictionary<byte[], int>(new ByteArrayComparer());
         string? line;
         while ((line = streamReader.ReadLine()) != null) {
             var result = line.Split(" ");
@@ -53,4 +53,20 @@ public class FileManager : IDisposable {
     private static string REPORT_ROOT_FOLDER = ".bpe_files";
 }
 
+public class ByteArrayComparer : IEqualityComparer<byte[]>
+{
+    public bool Equals(byte[] x, byte[] y)
+    {
+        return x.SequenceEqual(y);
+    }
 
+    public int GetHashCode(byte[] obj)
+    {
+        int hash = 17;
+        foreach (byte b in obj)
+        {
+            hash = hash * 31 + b;
+        }
+        return hash;
+    }
+}
