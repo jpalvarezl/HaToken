@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hatoken", "Hatoken.csproj", "{1031E1D5-53A9-47B1-A90C-791A2F52ACB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaTokenTests", "HaTokenTests\HaTokenTests.csproj", "{9EB6F1B6-57CC-45DE-BA56-E43AA3B409A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{1031E1D5-53A9-47B1-A90C-791A2F52ACB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1031E1D5-53A9-47B1-A90C-791A2F52ACB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1031E1D5-53A9-47B1-A90C-791A2F52ACB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EB6F1B6-57CC-45DE-BA56-E43AA3B409A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EB6F1B6-57CC-45DE-BA56-E43AA3B409A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EB6F1B6-57CC-45DE-BA56-E43AA3B409A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EB6F1B6-57CC-45DE-BA56-E43AA3B409A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

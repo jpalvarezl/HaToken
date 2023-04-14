@@ -8,8 +8,7 @@ internal class Program {
         // var tokenIds = await AzureMLEncoder.Encode("Hello world", Utils.EncodingFor("text-davinci-003"));
         var tokenIds = await NonAzureEncoder.Encode("Hello world", Utils.EncodingFor("text-davinci-003"));
 
-        foreach(var tokenId in tokenIds) {
-            Console.WriteLine(tokenId);
-        }
+
+        Console.WriteLine(string.Join(", ", tokenIds));
     }
 }
