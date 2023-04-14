@@ -4,12 +4,12 @@ using Services;
 namespace Encoders;
 
 public static class NonAzureEncoder {
-        public static async Task<List<int>> Encode(string text, EncoderName encoderName) {
+
+    public static async Task<List<int>> Encode(string text, EncoderName encoderName) {
         using var fileManager = new FileManager();
         using var encoderFactory = new EncoderFactory(fileManager);
 
         Encoder model = await encoderFactory.Create(encoderName);
-
         var encoded = model.Encode(text);
 
         return encoded;
@@ -23,12 +23,7 @@ internal static partial class Extensions {
 
         var output = new List<int>();
         foreach (Match match in regex.Matches(text)) {
-            Console.WriteLine($"Matched text: {match}");
             byte[] matchEncoded = System.Text.Encoding.UTF8.GetBytes(match.ToString());
-
-            foreach(var byteValue in matchEncoded) {
-                Console.WriteLine($"Matched Encoded roundtrip: {byteValue}");
-            }
 
             int value;
             if(encoder.MergeableRanks.TryGetValue(matchEncoded, out value)) {

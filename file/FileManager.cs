@@ -55,13 +55,12 @@ public class FileManager : IDisposable {
 
 public class ByteArrayComparer : IEqualityComparer<byte[]>
 {
-    public bool Equals(byte[] x, byte[] y)
-    {
-        return x.SequenceEqual(y);
+
+    public bool Equals(byte[]? x, byte[]? y) {
+        return x != null && y != null && x.SequenceEqual(y);
     }
 
-    public int GetHashCode(byte[] obj)
-    {
+    public int GetHashCode(byte[] obj) {
         int hash = 17;
         foreach (byte b in obj)
         {
