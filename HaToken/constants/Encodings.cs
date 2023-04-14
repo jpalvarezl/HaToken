@@ -1,6 +1,6 @@
 namespace Encoders;
 
-internal static class Utils {
+public static class Utils {
     public static EncoderName EncodingFor(string modelName) => modelName switch {
         // chat
         string x when x.StartsWith("gpt-3.5-turbo-")
