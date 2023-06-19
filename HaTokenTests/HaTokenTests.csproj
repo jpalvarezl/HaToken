@@ -23,4 +23,9 @@
     <ProjectReference Include="..\HaToken\HaToken.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="test_data/cl100k_base.json" />
+    <EmbeddedResource Include="test_data/p50k_base.json" />
+  </ItemGroup>
+
 </Project>
