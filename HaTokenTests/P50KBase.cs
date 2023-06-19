@@ -1,6 +1,7 @@
 
 using Encoders;
 using Xunit;
+using static HaTokenTests.TestUtils;
 
 namespace HaTokenTests;
 
@@ -13,5 +14,20 @@ public class P50KBase
         List<int> expected = new List<int>(){ 15496, 995};
 
         Assert.True(expected.SequenceEqual(actual));
+    }
+
+    [Theory]
+    [MemberData(nameof(GetP50KBaseTestData))]
+    public async Task TestEncoder(TestDataRow row)
+    {
+        List<int> actual = await NonAzureEncoder.Encode(row.text, Utils.EncodingFor("gpt-3.5-turbo-"));
+        List<int> expected = row.tokens;
+
+        Assert.True(expected.SequenceEqual(actual));
+    }
+
+    public static IEnumerable<object[]> GetP50KBaseTestData()
+    {
+        return GetEncoderTestData("p50k_base");
     }
 }
