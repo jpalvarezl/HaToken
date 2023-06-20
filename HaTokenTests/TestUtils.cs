@@ -6,12 +6,22 @@ namespace HaTokenTests;
 public static class TestUtils
 {
 
-    public static IEnumerable<object[]> GetEncoderTestData(string encoderName)
+    public static IEnumerable<object[]> GetEncoderTestData(
+        string encoderName, TestCount? testCount = null)
     {
         // Why this name is like this?
         var testData = LoadJson($"HaTokenTests.test_data.{encoderName}.json");
 
-        foreach (var row in testData)
+        var actualTestCount = testCount ?? new RunAll();
+
+        var runnableTests = actualTestCount switch
+        {
+            RunAll _ => testData,
+            RunTop top => testData.Take(top.GetCount),
+            _ => throw new NotImplementedException()
+        };
+
+        foreach (var row in runnableTests)
         {
             yield return new object[] { row };
         }
@@ -34,4 +44,20 @@ public static class TestUtils
         public string text { get; set; }
         public List<int> tokens { get; set; }
     }
+
+    public abstract class TestCount { }
+
+    public sealed class RunTop : TestCount
+    {
+        private int _count { get; }
+
+        public int GetCount => _count;
+
+        public RunTop(int count)
+        {
+            _count = count;
+        }
+    }
+
+    public sealed class RunAll : TestCount { }
 }

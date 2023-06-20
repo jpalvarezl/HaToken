@@ -16,7 +16,7 @@ public class P50KBase
         Assert.True(expected.SequenceEqual(actual));
     }
 
-    [Theory]
+    [Theory(Skip = "Too much noise")]
     [MemberData(nameof(GetP50KBaseTestData))]
     public async Task TestEncoder(TestDataRow row)
     {

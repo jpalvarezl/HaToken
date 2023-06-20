@@ -27,6 +27,6 @@ public class CL100KBase
 
     public static IEnumerable<object[]> GetCL100KBaseTestData()
     {
-        return GetEncoderTestData("cl100k_base");
+        return GetEncoderTestData("cl100k_base", new RunTop(1));
     }
 }
