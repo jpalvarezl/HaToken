@@ -19,11 +19,8 @@ public static class AzureMLEncoder {
         // Initialize Tokenizer
         var tokenizer = new Tokenizer(bpe, RobertaPreTokenizer.Instance);
 
-        // Define input for tokenization
-        var input = "Hello world";
-
         // Encode input
-        var tokenizerEncodedResult = tokenizer.Encode(input);
+        var tokenizerEncodedResult = tokenizer.Encode(text);
 
 
         return tokenizerEncodedResult.Ids;
