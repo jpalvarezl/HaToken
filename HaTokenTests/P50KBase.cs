@@ -20,7 +20,7 @@ public class P50KBase
     [MemberData(nameof(GetP50KBaseTestData))]
     public async Task TestEncoder(TestDataRow row)
     {
-        List<int> actual = await NonAzureEncoder.Encode(row.text, Utils.EncodingFor("gpt-3.5-turbo-"));
+        List<int> actual = await NonAzureEncoder.Encode(row.text, Utils.EncodingFor("text-davinci-003"));
         List<int> expected = row.tokens;
 
         Assert.True(expected.SequenceEqual(actual));

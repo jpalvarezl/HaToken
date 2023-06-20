@@ -21,17 +21,12 @@ public static class TestUtils
     {
         var assembly = Assembly.GetExecutingAssembly();
         using (var stream = assembly.GetManifestResourceStream(resourceName))
-        using (var reader = new StreamReader(stream))
+        using (var reader = new StreamReader(stream!))
         using (var jsonReader = new JsonTextReader(reader))
         {
             var serializer = new JsonSerializer();
-            return serializer.Deserialize<List<TestDataRow>>(jsonReader);
+            return serializer.Deserialize<List<TestDataRow>>(jsonReader)!;
         }
-    }
-
-    public class TestData
-    {
-        public List<TestDataRow> rows { get; set; }
     }
 
     public class TestDataRow
